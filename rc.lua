@@ -5,9 +5,9 @@ require("beautiful")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 -- The default is a dark theme
--- theme_path = "/usr/local/share/awesome/themes/default/theme"
+theme_path = "/usr/local/share/awesome/themes/default/theme"
 -- Uncommment this for a lighter theme
-theme_path = "/usr/local/share/awesome/themes/sky/theme"
+-- theme_path = "/usr/local/share/awesome/themes/sky/theme"
 
 -- Actually load theme
 beautiful.init(theme_path)
@@ -178,17 +178,20 @@ end
 for i = 1, keynumber do
     keybinding({ modkey }, i,
                    function ()
-                       local screen = mouse.screen
-                       if tags[screen][i] then
-                           awful.tag.viewonly(tags[screen][i])
-                       end
+											 --local screen = mouse.screen
+											 for s = 1, screen.count() do
+                       		if tags[s][i] then
+                           		awful.tag.viewonly(tags[s][i])
+                       		end
+											end
                    end):add()
     keybinding({ modkey, "Control" }, i,
                    function ()
-                       local screen = mouse.screen
-                       if tags[screen][i] then
-                           tags[screen][i].selected = not tags[screen][i].selected
-                       end
+									 		 for s = 1, screen.count() do
+		                       if tags[s][i] then
+    		                       tags[s][i].selected = not tags[s][i].selected
+        		               end
+											end
                    end):add()
     keybinding({ modkey, "Shift" }, i,
                    function ()
@@ -216,7 +219,7 @@ keybinding({ modkey }, "Escape", awful.tag.history.restore):add()
 keybinding({ modkey }, "Return", function () awful.util.spawn(terminal) end):add()
 
 keybinding({ modkey, "Control" }, "r", function ()
-                             r             mypromptbox[mouse.screen].text =
+                                          mypromptbox[mouse.screen].text =
                                                awful.util.escape(awful.util.restart())
                                         end):add()
 keybinding({ modkey, "Shift" }, "q", awesome.quit):add()
